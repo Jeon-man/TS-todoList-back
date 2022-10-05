@@ -1,6 +1,8 @@
 tags:
 - name: users
   description: users API
+- name: toDos
+  description: toDoList API
 
 paths:
 # [GET] users
@@ -103,6 +105,102 @@ paths:
         500:
           description: 'Server Error'
 
+  /toDos:
+    get:
+      tags:
+      - toDos
+      summary: Find All ToDos
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+    
+    post:
+      tags:
+      - toDos
+      summary: Add Todo
+      parameters:
+      - toDo: body
+        in: body
+        description: Todo Data
+        required: true
+        schema:
+          $ref: '#/definitions/toDos'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+          
+  /toDos/{id}:
+    get:
+      tags:
+      - toDos
+      summary: Find Todo By Id
+      parameters:
+      - name: id
+        in: path
+        description: todo Id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    put:
+      tags:
+      - toDos
+      summary: Update Todo By Id
+      parameters:
+      - name: id
+        in: path
+        description:  todo Id
+        required: true
+        type: integer
+      - name: body
+        in: body
+        description: ToDos Data
+        required: true
+        schema:
+          $ref: '#/definitions/toDos'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    delete:
+      tags:
+      - toDos
+      summary: Delete todo By Id
+      parameters:
+      - name: id
+        in: path
+        description: todo Id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
 # definitions
 definitions:
   users:
@@ -117,6 +215,20 @@ definitions:
       password:
         type: string
         description: user Password
+
+  toDos:
+    type: object
+    required:
+      - toDo
+      - userId
+    properties:
+      toDo:
+        type: string
+        description: user todo one
+      userId:
+        type: number
+        description: todo own user
+
 
 schemes:
  - https
