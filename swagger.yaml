@@ -206,6 +206,25 @@ paths:
         500:
           description: 'Server Error'
 
+  /toDos/success/{id}:
+    put:
+      tags:
+      - toDos
+      summary: Update todo Success state change to true
+      parameters:
+      - name: id
+        in: path
+        description: todo Id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
 
 # definitions
 definitions:
