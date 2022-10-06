@@ -1,3 +1,9 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: typescript-express Todo List
+  description: 타입스크립트와 익스프레스를 이용한 todo리스트 api
+
 tags:
 - name: users
   description: users API
