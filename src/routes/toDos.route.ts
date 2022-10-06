@@ -18,7 +18,7 @@ class ToDosRoute implements Routes {
     this.router.get(`${this.path}/:id(\\d+)`, this.toDosController.getToDoById);
     this.router.post(`${this.path}`, validationMiddleware(CreateTodoDto, 'body'), this.toDosController.createTodo);
     this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(CreateTodoDto, 'body', true), this.toDosController.updatetoDo);
-    this.router.put(`${this.path}/success/:id(\\d+)`, validationMiddleware(CreateTodoDto, 'body', true), this.toDosController.updateSuccessState);
+    this.router.get(`${this.path}/success/:id(\\d+)`, this.toDosController.updateSuccessState);
     this.router.delete(`${this.path}/:id(\\d+)`, this.toDosController.deletetoDo);
   }
 }

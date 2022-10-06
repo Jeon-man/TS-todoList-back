@@ -66,8 +66,8 @@ class ToDosController {
       const updateSuccessState: I.ToDos = await this.toDosService.updateSuccessState(toDoId);
 
       res.status(200).json({ data: updateSuccessState, message: 'SuccessState Update' });
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      next(error);
     }
   };
 }
