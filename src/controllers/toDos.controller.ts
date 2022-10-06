@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateTodoDto } from '@/dtos/toDos.dto';
-import { ToDos } from '@/interfaces/toDos.interface';
-import toDosService from '@/services/toDos.service';
+import * as dto from '../dtos/index.dto';
+import * as I from '../interfaces';
+import * as S from '../services/index.service';
 
 class ToDosController {
-  public toDosService = new toDosService();
+  public toDosService = new S.ToDosService();
 
   public getToDos = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const findAllToDos: ToDos[] = await this.toDosService.findAllToDos();
+      const findAllToDos: I.ToDos[] = await this.toDosService.findAllToDos();
       res.status(200).json({ data: findAllToDos, message: 'findAll' });
     } catch (error) {
       next(error);
@@ -18,7 +18,7 @@ class ToDosController {
   public getToDoById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const toDoId = Number(req.params.id);
-      const findOneToDoData: ToDos = await this.toDosService.findToDosById(toDoId);
+      const findOneToDoData: I.ToDos = await this.toDosService.findToDosById(toDoId);
 
       res.status(200).json({ data: findOneToDoData, message: 'findOne' });
     } catch (error) {
@@ -28,8 +28,8 @@ class ToDosController {
 
   public createTodo = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const toDoData: CreateTodoDto = req.body;
-      const createToDoData: ToDos = await this.toDosService.createTodo(toDoData);
+      const toDoData: dto.CreateTodoDto = req.body;
+      const createToDoData: I.ToDos = await this.toDosService.createTodo(toDoData);
 
       res.status(201).json({ data: createToDoData, message: '성공' });
     } catch (e) {
@@ -40,8 +40,8 @@ class ToDosController {
   public updatetoDo = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const toDoId = Number(req.params.id);
-      const toDoData: CreateTodoDto = req.body;
-      const updateUserData: ToDos = await this.toDosService.updateToDo(toDoId, toDoData);
+      const toDoData: dto.CreateTodoDto = req.body;
+      const updateUserData: I.ToDos = await this.toDosService.updateToDo(toDoId, toDoData);
 
       res.status(200).json({ data: updateUserData, message: 'updated' });
     } catch (error) {
@@ -52,11 +52,22 @@ class ToDosController {
   public deletetoDo = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const toDoId = Number(req.params.id);
-      const deleteToDoData: ToDos = await this.toDosService.deleteToDo(toDoId);
+      const deleteToDoData: I.ToDos = await this.toDosService.deleteToDo(toDoId);
 
       res.status(200).json({ data: deleteToDoData, message: 'deleted' });
     } catch (error) {
       next(error);
+    }
+  };
+
+  public updateSuccessState = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const toDoId = Number(req.params.id);
+      const updateSuccessState: I.ToDos = await this.toDosService.updateSuccessState(toDoId);
+
+      res.status(200).json({ data: updateSuccessState, message: 'SuccessState Update' });
+    } catch (e) {
+      next(e);
     }
   };
 }
