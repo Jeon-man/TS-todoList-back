@@ -7,6 +7,8 @@ export class UserModel extends Model<I.User, UserCreationAttributes> implements 
   public userId: number;
   public email: string;
   public password: string;
+  public authKey: string;
+  public authState: boolean;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -27,6 +29,15 @@ export default function (sequelize: Sequelize): typeof UserModel {
       password: {
         allowNull: false,
         type: DataTypes.STRING(255),
+      },
+      authKey: {
+        allowNull: false,
+        type: DataTypes.STRING(10),
+      },
+      authState: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {

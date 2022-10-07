@@ -17,3 +17,11 @@ export const isEmpty = (value: string | number | object): boolean => {
     return false;
   }
 };
+
+export const randomNumber = (): string => {
+  let randomNum = '';
+  for (let i = 0; i < 10; i++) {
+    randomNum += Math.floor(Math.random() * 10);
+  }
+  return randomNum;
+};

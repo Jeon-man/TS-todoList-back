@@ -1,16 +1,31 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto } from '@dtos/users.dto';
+import * as dto from '../dtos/index.dto';
 import { User } from '@interfaces/users.interface';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import AuthService from '@services/auth.service';
-
+import UserService from '@/services/users.service';
 class AuthController {
   public authService = new AuthService();
+  public usersService = new UserService();
+
+  public checkEmailAuth = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      // locahost:3000/{userId}/{authKey}
+      const { userId, authKey } = req.params;
+      const userData: dto.CreateUserDto = await this.usersService.findUserById(Number(userId));
+      await this.authService.checkToEmailAuthUpdate(userData, authKey);
+
+      res.status(200).json({ message: 'Email Auth Success' });
+    } catch (e) {
+      next(e);
+    }
+  };
 
   public signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
+      const userData: dto.CreateUserDto = req.body;
       const signUpUserData: User = await this.authService.signup(userData);
+      await this.authService.authMailSend(userData);
 
       res.status(201).json({ data: signUpUserData, message: 'signup' });
     } catch (error) {
@@ -20,7 +35,7 @@ class AuthController {
 
   public logIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
+      const userData: dto.CreateUserDto = req.body;
       const { cookie, findUser } = await this.authService.login(userData);
 
       res.setHeader('Set-Cookie', [cookie]);
