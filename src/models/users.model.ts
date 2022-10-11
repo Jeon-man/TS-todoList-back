@@ -9,6 +9,7 @@ export class UserModel extends Model<I.User, UserCreationAttributes> implements 
   public password: string;
   public authKey: string;
   public authState: boolean;
+  public groupId: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -38,6 +39,7 @@ export class UserModel extends Model<I.User, UserCreationAttributes> implements 
           type: DataTypes.BOOLEAN,
           defaultValue: false,
         },
+        groupId: DataTypes.INTEGER,
       },
       {
         tableName: 'users',
@@ -50,6 +52,12 @@ export class UserModel extends Model<I.User, UserCreationAttributes> implements 
       as: 'toDos',
       foreignKey: 'userId',
       onDelete: 'cascade',
+      hooks: true,
+    });
+    this.belongsTo(DB.GroupModel, {
+      as: 'users',
+      foreignKey: 'groupId',
+      onDelete: 'set null',
       hooks: true,
     });
   }

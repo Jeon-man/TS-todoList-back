@@ -56,6 +56,15 @@ export class UserService {
 
     return findUser;
   }
+
+  public async updateUserGroup(userId: number, groupId: number): Promise<I.User> {
+    const findUser = await this.findUserById(userId);
+    if (findUser) throw new HttpException(409, '');
+    await this.users.update({ groupId: groupId }, { where: { userId: userId } });
+    const updateUser: I.User = await this.findUserById(userId);
+
+    return updateUser;
+  }
 }
 
 export default UserService;

@@ -6,6 +6,9 @@ export class CreateUserDto {
 
   @IsString()
   public password: string;
+
+  @IsNumber()
+  public groupId: number;
 }
 
 export class EmailAuthDto {

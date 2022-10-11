@@ -4,4 +4,5 @@ export interface User {
   password: string;
   authState: boolean;
   authKey: string;
+  groupId: number;
 }
