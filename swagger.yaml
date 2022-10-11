@@ -106,6 +106,7 @@ paths:
         500:
           description: 'Server Error'
 
+# [GET] toDos
   /toDos:
     get:
       tags:
@@ -116,7 +117,8 @@ paths:
           description: 'OK'
         500:
           description: 'Server Error'
-    
+
+# [POST] toDos
     post:
       tags:
       - toDos
@@ -138,6 +140,7 @@ paths:
         500:
           description: 'Server Error'
           
+# [GET] toDos/id 
   /toDos/{id}:
     get:
       tags:
@@ -157,6 +160,7 @@ paths:
         500:
           description: 'Server Error'
 
+# [PUT] toDos/id
     put:
       tags:
       - toDos
@@ -183,6 +187,7 @@ paths:
         500:
           description: 'Server Error'
 
+# [DELETE] toDos/id
     delete:
       tags:
       - toDos
@@ -201,6 +206,7 @@ paths:
         500:
           description: 'Server Error'
 
+# [PUT] toDos/success/id
   /toDos/success/{id}:
     put:
       tags:
@@ -220,6 +226,7 @@ paths:
         500:
           description: 'Server Error'
 
+# [GET] id/authkey
   /{id}/{authKey}:
     get:
       tags:
