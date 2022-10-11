@@ -6,16 +6,16 @@ import * as S from '../services/index.service';
 class ToDosController {
   public toDosService = new S.ToDosService();
 
-  public getToDos = async (req: Request, res: Response, next: NextFunction) => {
+  async getToDos(req: Request, res: Response, next: NextFunction) {
     try {
       const findAllToDos: I.ToDos[] = await this.toDosService.findAllToDos();
       res.status(200).json({ data: findAllToDos, message: 'findAll' });
     } catch (error) {
       next(error);
     }
-  };
+  }
 
-  public getToDoById = async (req: Request, res: Response, next: NextFunction) => {
+  async getToDoById(req: Request, res: Response, next: NextFunction) {
     try {
       const toDoId = Number(req.params.id);
       const findOneToDoData: I.ToDos = await this.toDosService.findToDosById(toDoId);
@@ -24,9 +24,9 @@ class ToDosController {
     } catch (error) {
       next(error);
     }
-  };
+  }
 
-  public createTodo = async (req: Request, res: Response, next: NextFunction) => {
+  async createTodo(req: Request, res: Response, next: NextFunction) {
     try {
       const toDoData: dto.CreateTodoDto = req.body;
       const createToDoData: I.ToDos = await this.toDosService.createTodo(toDoData);
@@ -35,9 +35,9 @@ class ToDosController {
     } catch (e) {
       next(e);
     }
-  };
+  }
 
-  public updatetoDo = async (req: Request, res: Response, next: NextFunction) => {
+  async updatetoDo(req: Request, res: Response, next: NextFunction) {
     try {
       const toDoId = Number(req.params.id);
       const toDoData: dto.CreateTodoDto = req.body;
@@ -47,9 +47,9 @@ class ToDosController {
     } catch (error) {
       next(error);
     }
-  };
+  }
 
-  public deletetoDo = async (req: Request, res: Response, next: NextFunction) => {
+  async deletetoDo(req: Request, res: Response, next: NextFunction) {
     try {
       const toDoId = Number(req.params.id);
       const deleteToDoData: I.ToDos = await this.toDosService.deleteToDo(toDoId);
@@ -58,9 +58,9 @@ class ToDosController {
     } catch (error) {
       next(error);
     }
-  };
+  }
 
-  public updateSuccessState = async (req: Request, res: Response, next: NextFunction) => {
+  async updateSuccessState(req: Request, res: Response, next: NextFunction) {
     try {
       const toDoId = Number(req.params.id);
       const updateSuccessState: I.ToDos = await this.toDosService.updateSuccessState(toDoId);
@@ -69,7 +69,7 @@ class ToDosController {
     } catch (error) {
       next(error);
     }
-  };
+  }
 }
 
 export default ToDosController;

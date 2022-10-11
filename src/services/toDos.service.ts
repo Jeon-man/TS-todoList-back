@@ -7,11 +7,11 @@ import * as I from '../interfaces';
 export class ToDosService {
   public toDos = DB.ToDosModel;
 
-  public async findAllToDos(): Promise<I.ToDos[]> {
+  async findAllToDos(): Promise<I.ToDos[]> {
     return await this.toDos.findAll();
   }
 
-  public async findToDosById(toDoId: number): Promise<I.ToDos> {
+  async findToDosById(toDoId: number): Promise<I.ToDos> {
     if (isEmpty(toDoId)) throw new HttpException(400, '입력이 없습니다.');
 
     const findToDo: I.ToDos = await this.toDos.findByPk(toDoId);
@@ -19,13 +19,13 @@ export class ToDosService {
     return findToDo;
   }
 
-  public async createTodo(toDoData: dto.CreateTodoDto): Promise<I.ToDos> {
+  async createTodo(toDoData: dto.CreateTodoDto): Promise<I.ToDos> {
     if (isEmpty(toDoData)) throw new HttpException(400, '입력이 없습니다');
     const createTodoData: I.ToDos = await this.toDos.create({ ...toDoData });
     return createTodoData;
   }
 
-  public async updateToDo(toDoId: number, toDoData: dto.CreateTodoDto): Promise<I.ToDos> {
+  async updateToDo(toDoId: number, toDoData: dto.CreateTodoDto): Promise<I.ToDos> {
     if (isEmpty(toDoData)) throw new HttpException(400, '입력이 없습니다');
 
     const findToDo: I.ToDos = await this.findToDosById(toDoId);
@@ -36,7 +36,7 @@ export class ToDosService {
     return updateToDo;
   }
 
-  public async deleteToDo(toDoId: number): Promise<I.ToDos> {
+  async deleteToDo(toDoId: number): Promise<I.ToDos> {
     if (isEmpty(toDoId)) throw new HttpException(400, '입력이 없습니다');
 
     const findToDo: I.ToDos = await this.findToDosById(toDoId);
@@ -46,7 +46,7 @@ export class ToDosService {
     return findToDo;
   }
 
-  public async updateSuccessState(toDoId: number): Promise<I.ToDos> {
+  async updateSuccessState(toDoId: number): Promise<I.ToDos> {
     await this.toDos.update({ successState: true }, { where: { toDoId: toDoId } });
     const updateToDo: I.ToDos = await this.findToDosById(toDoId);
     return updateToDo;

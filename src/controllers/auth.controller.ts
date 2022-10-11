@@ -7,7 +7,7 @@ class AuthController {
   public authService = new S.AuthService();
   public usersService = new S.UserService();
 
-  public checkEmailAuth = async (req: Request, res: Response, next: NextFunction) => {
+  async checkEmailAuth(req: Request, res: Response, next: NextFunction) {
     try {
       // locahost:3000/{userId}/{authKey}
       const { userId, authKey } = req.params;
@@ -18,9 +18,9 @@ class AuthController {
     } catch (e) {
       next(e);
     }
-  };
+  }
 
-  public signUp = async (req: Request, res: Response, next: NextFunction) => {
+  async signUp(req: Request, res: Response, next: NextFunction) {
     try {
       const userData: dto.CreateUserDto = req.body;
       const signUpUserData: I.User = await this.authService.signup(userData);
@@ -30,9 +30,9 @@ class AuthController {
     } catch (error) {
       next(error);
     }
-  };
+  }
 
-  public logIn = async (req: Request, res: Response, next: NextFunction) => {
+  async logIn(req: Request, res: Response, next: NextFunction) {
     try {
       const userData: dto.CreateUserDto = req.body;
       const { cookie, findUser } = await this.authService.login(userData);
@@ -42,9 +42,9 @@ class AuthController {
     } catch (error) {
       next(error);
     }
-  };
+  }
 
-  public logOut = async (req: I.RequestWithUser, res: Response, next: NextFunction) => {
+  async logOut(req: I.RequestWithUser, res: Response, next: NextFunction) {
     try {
       const userData: I.User = req.user;
       const logOutUserData: I.User = await this.authService.logout(userData);
@@ -54,7 +54,7 @@ class AuthController {
     } catch (error) {
       next(error);
     }
-  };
+  }
 }
 
 export default AuthController;

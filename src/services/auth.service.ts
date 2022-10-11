@@ -13,7 +13,7 @@ import { randomNumber } from '@utils/util';
 export class AuthService {
   public users = DB.UserModel;
 
-  public async signup(userData: dto.CreateUserDto): Promise<I.User> {
+  async signup(userData: dto.CreateUserDto): Promise<I.User> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
     const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
@@ -25,7 +25,7 @@ export class AuthService {
     return createUserData;
   }
 
-  public async authMailSend(userData: dto.CreateUserDto): Promise<void> {
+  async authMailSend(userData: dto.CreateUserDto): Promise<void> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
     const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
@@ -39,7 +39,7 @@ export class AuthService {
     mailSender.sendMail(emailSendUserdata);
   }
 
-  public async checkToEmailAuthUpdate(userData: dto.CreateUserDto, paramKey: string): Promise<void> {
+  async checkToEmailAuthUpdate(userData: dto.CreateUserDto, paramKey: string): Promise<void> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
     const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
@@ -50,7 +50,7 @@ export class AuthService {
     }
   }
 
-  public async login(userData: dto.CreateUserDto): Promise<{ cookie: string; findUser: I.User }> {
+  async login(userData: dto.CreateUserDto): Promise<{ cookie: string; findUser: I.User }> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
     const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
@@ -65,7 +65,7 @@ export class AuthService {
     return { cookie, findUser };
   }
 
-  public async logout(userData: I.User): Promise<I.User> {
+  async logout(userData: I.User): Promise<I.User> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
     const findUser: I.User = await this.users.findOne({ where: { email: userData.email, password: userData.password } });
@@ -74,7 +74,7 @@ export class AuthService {
     return findUser;
   }
 
-  public createToken(user: I.User): TokenData {
+  createToken(user: I.User): TokenData {
     const dataStoredInToken: DataStoredInToken = { id: user.userId };
     const secretKey: string = SECRET_KEY;
     const expiresIn: number = 60 * 60;
@@ -82,7 +82,7 @@ export class AuthService {
     return { expiresIn, token: sign(dataStoredInToken, secretKey, { expiresIn }) };
   }
 
-  public createCookie(tokenData: TokenData): string {
+  createCookie(tokenData: TokenData): string {
     return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
   }
 }

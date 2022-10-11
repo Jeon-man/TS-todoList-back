@@ -8,12 +8,12 @@ import { isEmpty } from '@utils/util';
 export class UserService {
   public users = DB.UserModel;
 
-  public async findAllUser(): Promise<I.User[]> {
+  async findAllUser(): Promise<I.User[]> {
     const allUser: I.User[] = await this.users.findAll();
     return allUser;
   }
 
-  public async findUserById(userId: number): Promise<I.User> {
+  async findUserById(userId: number): Promise<I.User> {
     if (isEmpty(userId)) throw new HttpException(400, 'UserId is empty');
 
     const findUser: I.User = await this.users.findByPk(userId);
@@ -22,7 +22,7 @@ export class UserService {
     return findUser;
   }
 
-  public async createUser(userData: dto.CreateUserDto): Promise<I.User> {
+  async createUser(userData: dto.CreateUserDto): Promise<I.User> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
     const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
@@ -33,7 +33,7 @@ export class UserService {
     return createUserData;
   }
 
-  public async updateUser(userId: number, userData: dto.CreateUserDto): Promise<I.User> {
+  async updateUser(userId: number, userData: dto.CreateUserDto): Promise<I.User> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
     const findUser: I.User = await this.users.findByPk(userId);
@@ -46,7 +46,7 @@ export class UserService {
     return updateUser;
   }
 
-  public async deleteUser(userId: number): Promise<I.User> {
+  async deleteUser(userId: number): Promise<I.User> {
     if (isEmpty(userId)) throw new HttpException(400, "User doesn't existId");
 
     const findUser: I.User = await this.users.findByPk(userId);
@@ -57,7 +57,7 @@ export class UserService {
     return findUser;
   }
 
-  public async updateUserGroup(userId: number, groupId: number): Promise<I.User> {
+  async updateUserGroup(userId: number, groupId: number): Promise<I.User> {
     const findUser = await this.findUserById(userId);
     if (findUser) throw new HttpException(409, '');
     await this.users.update({ groupId: groupId }, { where: { userId: userId } });

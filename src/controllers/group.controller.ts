@@ -6,16 +6,16 @@ import * as S from '../services/index.service';
 class GroupController {
   public groupService = new S.groupService();
 
-  public getGroups = async (req: Request, res: Response, next: NextFunction) => {
+  async getGroups(req: Request, res: Response, next: NextFunction) {
     try {
       const findAllGroup: I.Group[] = await this.groupService.findAllGroup();
       res.status(200).json({ data: findAllGroup, message: 'findAll' });
     } catch (e) {
       next(e);
     }
-  };
+  }
 
-  public getGroupById = async (req: Request, res: Response, next: NextFunction) => {
+  async getGroupById(req: Request, res: Response, next: NextFunction) {
     try {
       const groupId = Number(req.params.id);
       const findGroup: I.Group = await this.groupService.findGroupById(groupId);
@@ -24,9 +24,9 @@ class GroupController {
     } catch (e) {
       next(e);
     }
-  };
+  }
 
-  public createGroup = async (req: Request, res: Response, next: NextFunction) => {
+  async createGroup(req: Request, res: Response, next: NextFunction) {
     try {
       const groupData: dto.createGroupDto = req.body;
       const createGroupData: I.Group = await this.groupService.createGroup(groupData);
@@ -35,9 +35,9 @@ class GroupController {
     } catch (e) {
       next(e);
     }
-  };
+  }
 
-  public updateGroup = async (req: Request, res: Response, next: NextFunction) => {
+  async updateGroup(req: Request, res: Response, next: NextFunction) {
     try {
       const groupId = Number(req.params.id);
       const groupData: dto.createGroupDto = req.body;
@@ -47,9 +47,9 @@ class GroupController {
     } catch (e) {
       next(e);
     }
-  };
+  }
 
-  public deleteGroup = async (req: Request, res: Response, next: NextFunction) => {
+  async deleteGroup(req: Request, res: Response, next: NextFunction) {
     try {
       const groupId = Number(req.params.id);
       const deleteGrouprData: I.Group = await this.groupService.deleteGroup(groupId);
@@ -58,7 +58,7 @@ class GroupController {
     } catch (e) {
       next(e);
     }
-  };
+  }
 }
 
 export default GroupController;
