@@ -11,16 +11,14 @@ import mailSender from '@utils/mail';
 import { randomNumber } from '@utils/util';
 
 export class AuthService {
-  public users = DB.UserModel;
-
   async signup(userData: dto.CreateUserDto): Promise<I.User> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
-    const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
+    const findUser: I.User = await DB.UserModel.findOne({ where: { email: userData.email } });
     if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
     const authKey: string = randomNumber();
     const hashedPassword = await hash(userData.password, 10);
-    const createUserData: I.User = await this.users.create({ ...userData, password: hashedPassword, authKey: authKey });
+    const createUserData: I.User = await DB.UserModel.create({ ...userData, password: hashedPassword, authKey: authKey });
 
     return createUserData;
   }
@@ -28,7 +26,7 @@ export class AuthService {
   async authMailSend(userData: dto.CreateUserDto): Promise<void> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
-    const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
+    const findUser: I.User = await DB.UserModel.findOne({ where: { email: userData.email } });
 
     const emailSendUserdata = {
       toEmail: userData.email,
@@ -42,9 +40,9 @@ export class AuthService {
   async checkToEmailAuthUpdate(userData: dto.CreateUserDto, paramKey: string): Promise<void> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
-    const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
+    const findUser: I.User = await DB.UserModel.findOne({ where: { email: userData.email } });
     if (findUser.authKey === paramKey) {
-      this.users.update({ authState: true }, { where: { userId: findUser.userId } });
+      DB.UserModel.update({ authState: true }, { where: { userId: findUser.userId } });
     } else {
       throw new HttpException(400, 'match error');
     }
@@ -53,7 +51,7 @@ export class AuthService {
   async login(userData: dto.CreateUserDto): Promise<{ cookie: string; findUser: I.User }> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
-    const findUser: I.User = await this.users.findOne({ where: { email: userData.email } });
+    const findUser: I.User = await DB.UserModel.findOne({ where: { email: userData.email } });
     if (!findUser) throw new HttpException(409, `This email ${userData.email} was not found`);
 
     const isPasswordMatching: boolean = await compare(userData.password, findUser.password);
@@ -68,7 +66,7 @@ export class AuthService {
   async logout(userData: I.User): Promise<I.User> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 
-    const findUser: I.User = await this.users.findOne({ where: { email: userData.email, password: userData.password } });
+    const findUser: I.User = await DB.UserModel.findOne({ where: { email: userData.email, password: userData.password } });
     if (!findUser) throw new HttpException(409, "User doesn't exist");
 
     return findUser;
