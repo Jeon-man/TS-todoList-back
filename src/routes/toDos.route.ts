@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import ToDosController from '@/controllers/toDos.controller';
-import { CreateTodoDto } from '@/dtos/toDos.dto';
-import { Routes } from '@interfaces/routes.interface';
+import * as dto from '../dtos/index.dto';
+import * as I from '../interfaces';
 import validationMiddleware from '@middlewares/validation.middleware';
 
-class ToDosRoute implements Routes {
+class ToDosRoute implements I.Routes {
   public path = '/toDos';
   public router = Router();
   public toDosController = new ToDosController();
@@ -16,8 +16,8 @@ class ToDosRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.toDosController.getToDos);
     this.router.get(`${this.path}/:id(\\d+)`, this.toDosController.getToDoById);
-    this.router.post(`${this.path}`, validationMiddleware(CreateTodoDto, 'body'), this.toDosController.createTodo);
-    this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(CreateTodoDto, 'body', true), this.toDosController.updatetoDo);
+    this.router.post(`${this.path}`, validationMiddleware(dto.CreateTodoDto, 'body'), this.toDosController.createTodo);
+    this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(dto.CreateTodoDto, 'body', true), this.toDosController.updatetoDo);
     this.router.get(`${this.path}/success/:id(\\d+)`, this.toDosController.updateSuccessState);
     this.router.delete(`${this.path}/:id(\\d+)`, this.toDosController.deletetoDo);
   }

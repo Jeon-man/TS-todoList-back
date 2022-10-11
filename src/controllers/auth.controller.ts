@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import * as dto from '../dtos/index.dto';
 import * as I from '../interfaces';
-import { RequestWithUser } from '@interfaces/auth.interface';
 import * as S from '../services/index.service';
 
 class AuthController {
@@ -45,7 +44,7 @@ class AuthController {
     }
   };
 
-  public logOut = async (req: RequestWithUser, res: Response, next: NextFunction) => {
+  public logOut = async (req: I.RequestWithUser, res: Response, next: NextFunction) => {
     try {
       const userData: I.User = req.user;
       const logOutUserData: I.User = await this.authService.logout(userData);
