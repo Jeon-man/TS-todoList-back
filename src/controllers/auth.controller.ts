@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import * as dto from '../dtos/index.dto';
-import { User } from '@interfaces/users.interface';
+import * as I from '../interfaces';
 import { RequestWithUser } from '@interfaces/auth.interface';
-import AuthService from '@services/auth.service';
-import UserService from '@/services/users.service';
+import * as S from '../services/index.service';
+
 class AuthController {
-  public authService = new AuthService();
-  public usersService = new UserService();
+  public authService = new S.AuthService();
+  public usersService = new S.UserService();
 
   public checkEmailAuth = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -24,7 +24,7 @@ class AuthController {
   public signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: dto.CreateUserDto = req.body;
-      const signUpUserData: User = await this.authService.signup(userData);
+      const signUpUserData: I.User = await this.authService.signup(userData);
       await this.authService.authMailSend(userData);
 
       res.status(201).json({ data: signUpUserData, message: 'signup' });
@@ -47,8 +47,8 @@ class AuthController {
 
   public logOut = async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
-      const userData: User = req.user;
-      const logOutUserData: User = await this.authService.logout(userData);
+      const userData: I.User = req.user;
+      const logOutUserData: I.User = await this.authService.logout(userData);
 
       res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
       res.status(200).json({ data: logOutUserData, message: 'logout' });
