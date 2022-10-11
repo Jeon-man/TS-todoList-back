@@ -4,6 +4,8 @@ tags:
   description: users API
 - name: toDos
   description: toDoList API
+- name:
+  decription: Group API
 
 paths:
 # [GET] users
@@ -251,6 +253,107 @@ paths:
         500:
           description: 'Server Error'
 
+# [GET] group
+  /group:
+    get:
+      tags:
+      - group
+      summary: Find All Group
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+    
+    # [POST] group
+    post:
+      tags:
+      - group
+      summary: 
+      parameters:
+      - name: body
+        in: body
+        description: group name
+        required: true
+        schema:
+          $ref: '#/definitions/group'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+          
+# [GET] group/id
+  /group/{id}:
+    get:
+      tags:
+      - group
+      summary: Find group by id
+      parameters:
+      - name: id
+        in: path
+        description: group id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [PUT] group/id
+    put:
+      tags:
+      - group
+      summary: Update group By Id
+      parameters:
+      - name: id
+        in: path
+        description: group id
+        required: true
+        type: integer
+      - name: body
+        in: body
+        description: group data
+        required: true
+        schema:
+          $ref: '#/definitions/group'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [DELETE] group/id
+    delete:
+      tags:
+      - group
+      summary: Delete group By Id
+      parameters:
+      - name: id
+        in: path
+        description: group Id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
 
 
 # definitions
@@ -272,7 +375,10 @@ definitions:
         decription: user Email auth state
       authKey:
         type: number
-        depcription: user authkey for auth
+        description: user authkey for auth
+      groupId:
+        type: number
+        description: user join groupId
         
   toDos:
     type: object
@@ -286,6 +392,15 @@ definitions:
       userId:
         type: number
         description: todo own user
+  
+  group:
+    type: object
+    required:
+      - groupName
+    properties:
+      groupName:
+        type: string
+        description: group has name
 
 
 schemes:
