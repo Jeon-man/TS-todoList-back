@@ -5,7 +5,7 @@ import * as dto from '../dtos/index.dto';
 import * as I from '../interfaces';
 
 export class ToDosService {
-  public toDos = DB.ToDos;
+  public toDos = DB.ToDosModel;
 
   public async findAllToDos(): Promise<I.ToDos[]> {
     return await this.toDos.findAll();

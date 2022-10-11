@@ -1,12 +1,12 @@
 import { hash } from 'bcrypt';
-import DB from '@databases';
+import DB from '../databases';
 import * as I from '../interfaces';
 import * as dto from '../dtos/index.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
 
 export class UserService {
-  public users = DB.Users;
+  public users = DB.UserModel;
 
   public async findAllUser(): Promise<I.User[]> {
     const allUser: I.User[] = await this.users.findAll();

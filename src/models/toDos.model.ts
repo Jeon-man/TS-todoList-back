@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import * as I from '../interfaces';
-
+import * as M from '../models/index.model';
 export type ToDosCreationAttributes = Optional<I.ToDos, 'toDoId' | 'toDo' | 'userId' | 'successState'>;
 
 export class ToDosModel extends Model<I.ToDos, ToDosCreationAttributes> implements I.ToDos {
@@ -11,32 +11,39 @@ export class ToDosModel extends Model<I.ToDos, ToDosCreationAttributes> implemen
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-}
 
-export default function (sequelize: Sequelize): typeof ToDosModel {
-  ToDosModel.init(
-    {
-      toDoId: {
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
+  static initModel(sequelize: Sequelize) {
+    this.init(
+      {
+        toDoId: {
+          autoIncrement: true,
+          primaryKey: true,
+          type: DataTypes.INTEGER,
+        },
+        toDo: {
+          allowNull: false,
+          type: DataTypes.STRING(50),
+        },
+        userId: DataTypes.INTEGER,
+        successState: {
+          allowNull: false,
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
       },
-      toDo: {
-        allowNull: false,
-        type: DataTypes.STRING(50),
+      {
+        tableName: 'ToDos',
+        sequelize,
       },
-      userId: DataTypes.INTEGER,
-      successState: {
-        allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-    },
-    {
-      tableName: 'ToDos',
-      sequelize,
-    },
-  );
+    );
+  }
 
-  return ToDosModel;
+  static associate(DB: typeof M) {
+    this.belongsTo(DB.UserModel, {
+      as: 'toDos',
+      foreignKey: 'userId',
+      onDelete: 'cascade',
+      hooks: true,
+    });
+  }
 }

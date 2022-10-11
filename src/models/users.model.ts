@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import * as I from '../interfaces';
-
+import * as M from '../models/index.model';
 export type UserCreationAttributes = Optional<I.User, 'userId' | 'email' | 'password'>;
 
 export class UserModel extends Model<I.User, UserCreationAttributes> implements I.User {
@@ -12,39 +12,45 @@ export class UserModel extends Model<I.User, UserCreationAttributes> implements 
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-}
 
-export default function (sequelize: Sequelize): typeof UserModel {
-  UserModel.init(
-    {
-      userId: {
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
+  static initModel(sequelize: Sequelize) {
+    this.init(
+      {
+        userId: {
+          autoIncrement: true,
+          primaryKey: true,
+          type: DataTypes.INTEGER,
+        },
+        email: {
+          allowNull: false,
+          type: DataTypes.STRING(45),
+        },
+        password: {
+          allowNull: false,
+          type: DataTypes.STRING(255),
+        },
+        authKey: {
+          allowNull: false,
+          type: DataTypes.STRING(10),
+        },
+        authState: {
+          allowNull: false,
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+        },
       },
-      email: {
-        allowNull: false,
-        type: DataTypes.STRING(45),
+      {
+        tableName: 'users',
+        sequelize,
       },
-      password: {
-        allowNull: false,
-        type: DataTypes.STRING(255),
-      },
-      authKey: {
-        allowNull: false,
-        type: DataTypes.STRING(10),
-      },
-      authState: {
-        allowNull: false,
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-    },
-    {
-      tableName: 'users',
-      sequelize,
-    },
-  );
-
-  return UserModel;
+    );
+  }
+  static asscociate(DB: typeof M) {
+    this.hasMany(DB.ToDosModel, {
+      as: 'toDos',
+      foreignKey: 'userId',
+      onDelete: 'cascade',
+      hooks: true,
+    });
+  }
 }
