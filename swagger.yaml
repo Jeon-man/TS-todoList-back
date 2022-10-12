@@ -4,8 +4,10 @@ tags:
   description: users API
 - name: toDos
   description: toDoList API
-- name:
+- name: group
   decription: Group API
+- name: boardKind
+  description: boardKind for board
 
 paths:
 # [GET] users
@@ -353,6 +355,105 @@ paths:
         500:
           description: 'Server Error'
 
+# [GET] board
+  /board:
+    get:
+      tags:
+      - boardKind
+      summary: Find All boardKind
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+    
+# [POST] board
+    post:
+      tags:
+      - boardKind
+      summary: 
+      parameters:
+      - name: body
+        in: body
+        description: boardKind name
+        required: true
+        schema:
+          $ref: '#/definitions/boardKind'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+          
+# [GET] board/id
+  /board/{id}:
+    get:
+      tags:
+      - boardKind
+      summary: Find boardKind by id
+      parameters:
+      - name: id
+        in: path
+        description: boardKind id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [PUT] board/id
+    put:
+      tags:
+      - boardKind
+      summary: Update boardKind By Id
+      parameters:
+      - name: id
+        in: path
+        description: boardKind id
+        required: true
+        type: integer
+      - name: body
+        in: body
+        description: boardKind data
+        required: true
+        schema:
+          $ref: '#/definitions/boardKind'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [DELETE] board/id
+    delete:
+      tags:
+      - boardKind
+      summary: Delete boardKind By Id
+      parameters:
+      - name: id
+        in: path
+        description: boardKind Id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
 
 
 
@@ -401,6 +502,15 @@ definitions:
       groupName:
         type: string
         description: group has name
+  
+  boardKind:
+    type: object
+    required:
+      - boardKind
+    properties:
+      boardKind:
+        type: string
+        depcription: boardKind name
 
 
 schemes:

@@ -32,7 +32,7 @@ export class ToDosModel extends Model<I.ToDos, ToDosCreationAttributes> implemen
         },
       },
       {
-        tableName: 'ToDos',
+        tableName: 'todos',
         sequelize,
       },
     );
