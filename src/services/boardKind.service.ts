@@ -3,9 +3,16 @@ import { HttpException } from '@exceptions/HttpException';
 import * as dto from '../dtos/index.dto';
 import * as I from '../interfaces';
 
-export class boardKindService {
+export class BoardKindService {
   async findAllBoardKind(): Promise<I.BoardKind[]> {
     return await DB.boardKindModel.findAll();
+  }
+
+  async findBoardKindByBoardKindName(boardKindName: string) {
+    const findBoard: I.BoardKind = await DB.boardKindModel.findOne({ where: { boardKind: boardKindName } });
+    if (!findBoard) throw new HttpException(409, '');
+
+    return findBoard;
   }
 
   async findBoardKindById(boardKindId: number): Promise<I.BoardKind> {

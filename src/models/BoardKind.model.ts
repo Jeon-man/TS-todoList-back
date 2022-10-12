@@ -21,6 +21,7 @@ export class boardKindModel extends Model<I.BoardKind, BoardKindCreationAtrribut
         boardKind: {
           allowNull: false,
           type: DataTypes.STRING(30),
+          unique: true,
         },
       },
       {

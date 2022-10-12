@@ -27,8 +27,7 @@ export interface BoardKind {
 export interface Board {
   boardId: number;
   userId: number;
-  boardKindId: string;
+  boardKindId: number;
   title: string;
   contents: string;
-  likeCount: number;
 }

@@ -1,15 +1,14 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import * as I from '../interfaces';
 import * as M from './index.model';
-export type BoardCreationAtrributes = Optional<I.Board, 'boardKindId' | 'contents' | 'likeCount' | 'title' | 'userId' | 'boardId'>;
+export type BoardCreationAtrributes = Optional<I.Board, 'boardKindId' | 'contents' | 'title' | 'userId' | 'boardId'>;
 
 export class boardModel extends Model<I.Board, BoardCreationAtrributes> implements I.Board {
   boardId: number;
   userId: number;
-  boardKindId: string;
+  boardKindId: number;
   title: string;
   contents: string;
-  likeCount: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -31,10 +30,6 @@ export class boardModel extends Model<I.Board, BoardCreationAtrributes> implemen
         contents: {
           type: DataTypes.TEXT,
           allowNull: false,
-        },
-        likeCount: {
-          type: DataTypes.INTEGER,
-          defaultValue: 0,
         },
       },
       {

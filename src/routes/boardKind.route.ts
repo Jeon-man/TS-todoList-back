@@ -5,7 +5,7 @@ import * as I from '../interfaces';
 import validationMiddleware from '@middlewares/validation.middleware';
 
 export default class BoardKindRoute implements I.Routes {
-  public path = '/board';
+  public path = '/boardKind';
   public router = Router();
   public boardKindController = new BoardKindController();
 
