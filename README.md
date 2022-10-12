@@ -1,1 +1,1 @@
-# typescript-express-starter를 사용한 project
+# typescript, express, sequelize 사용한 project
