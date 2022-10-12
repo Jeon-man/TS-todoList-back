@@ -32,8 +32,8 @@ class ToDosController {
       const createToDoData: I.ToDos = await this.toDosService.createTodo(toDoData);
 
       res.status(201).json({ data: createToDoData, message: '성공' });
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      next(error);
     }
   }
 

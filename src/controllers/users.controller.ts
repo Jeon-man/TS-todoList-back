@@ -60,6 +60,18 @@ class UsersController {
       next(error);
     }
   }
+
+  async updateUserGroup(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = Number(req.params.id);
+      const updateGroupData: dto.updateGroupIdDto = req.body;
+      const updateUserInGroup: I.User = await this.userService.updateUserGroup(userId, updateGroupData.groupId);
+
+      res.status(200).json({ data: updateUserInGroup, meesage: 'update' });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default UsersController;

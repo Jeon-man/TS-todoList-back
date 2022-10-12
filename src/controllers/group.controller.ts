@@ -10,8 +10,8 @@ class GroupController {
     try {
       const findAllGroup: I.Group[] = await this.groupService.findAllGroup();
       res.status(200).json({ data: findAllGroup, message: 'findAll' });
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      next(error);
     }
   }
 
@@ -21,8 +21,8 @@ class GroupController {
       const findGroup: I.Group = await this.groupService.findGroupById(groupId);
 
       res.status(200).json({ data: findGroup, message: 'findOne' });
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      next(error);
     }
   }
 
@@ -32,8 +32,8 @@ class GroupController {
       const createGroupData: I.Group = await this.groupService.createGroup(groupData);
 
       res.status(201).json({ data: createGroupData, message: 'created' });
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      next(error);
     }
   }
 
@@ -44,8 +44,8 @@ class GroupController {
       const updateGroupData: I.Group = await this.groupService.updateGroup(groupId, groupData);
 
       res.status(200).json({ data: updateGroupData, message: 'update' });
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      next(error);
     }
   }
 
@@ -55,8 +55,8 @@ class GroupController {
       const deleteGrouprData: I.Group = await this.groupService.deleteGroup(groupId);
 
       res.status(200).json({ data: deleteGrouprData, message: 'deleted' });
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      next(error);
     }
   }
 }

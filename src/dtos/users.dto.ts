@@ -18,3 +18,8 @@ export class EmailAuthDto {
   @IsString()
   public authKey: string;
 }
+
+export class updateGroupIdDto {
+  @IsNumber()
+  public groupId: number;
+}

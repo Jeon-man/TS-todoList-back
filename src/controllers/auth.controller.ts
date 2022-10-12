@@ -9,14 +9,13 @@ class AuthController {
 
   async checkEmailAuth(req: Request, res: Response, next: NextFunction) {
     try {
-      // locahost:3000/{userId}/{authKey}
       const { userId, authKey } = req.params;
       const userData: dto.CreateUserDto = await this.usersService.findUserById(Number(userId));
       await this.authService.checkToEmailAuthUpdate(userData, authKey);
 
       res.status(200).json({ message: 'Email Auth Success' });
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      next(error);
     }
   }
 

@@ -58,6 +58,7 @@ export class UserService {
   async updateUserGroup(userId: number, groupId: number): Promise<I.User> {
     const findUser = await this.findUserById(userId);
     if (findUser) throw new HttpException(409, '');
+
     await DB.UserModel.update({ groupId: groupId }, { where: { userId: userId } });
     const updateUser: I.User = await this.findUserById(userId);
 

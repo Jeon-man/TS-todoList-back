@@ -18,6 +18,7 @@ class UsersRoute implements I.Routes {
     this.router.get(`${this.path}/:id(\\d+)`, this.usersController.getUserById);
     this.router.post(`${this.path}`, validationMiddleware(dto.CreateUserDto, 'body'), this.usersController.createUser);
     this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(dto.CreateUserDto, 'body', true), this.usersController.updateUser);
+    this.router.put(`${this.path}/group-up/:id`, validationMiddleware(dto.updateGroupIdDto, 'body'), this.usersController.updateUserGroup);
     this.router.delete(`${this.path}/:id(\\d+)`, this.usersController.deleteUser);
   }
 }
