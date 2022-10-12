@@ -1,9 +1,9 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import * as I from '../interfaces';
-import * as M from '../models/index.model';
+import * as M from './index.model';
 export type BoardCreationAtrributes = Optional<I.Board, 'boardKindId' | 'contents' | 'likeCount' | 'title' | 'userId' | 'boardId'>;
 
-export class BoardModel extends Model<I.Board, BoardCreationAtrributes> implements I.Board {
+export class boardModel extends Model<I.Board, BoardCreationAtrributes> implements I.Board {
   boardId: number;
   userId: number;
   boardKindId: string;
@@ -44,8 +44,8 @@ export class BoardModel extends Model<I.Board, BoardCreationAtrributes> implemen
     );
   }
   static associate(DB: typeof M) {
-    this.belongsTo(DB.BoardKindModel, {
-      as: 'boardKind',
+    this.belongsTo(DB.boardKindModel, {
+      as: 'boardKinds',
       foreignKey: 'boardKindId',
       onDelete: 'cascade',
       hooks: true,
