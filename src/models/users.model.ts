@@ -60,5 +60,11 @@ export class UserModel extends Model<I.User, UserCreationAttributes> implements 
       onDelete: 'set null',
       hooks: true,
     });
+    this.hasMany(DB.BoardModel, {
+      as: 'users',
+      foreignKey: 'userId',
+      onDelete: 'cascade',
+      hooks: true,
+    });
   }
 }
