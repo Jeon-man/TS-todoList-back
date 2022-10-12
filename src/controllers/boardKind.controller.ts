@@ -3,7 +3,7 @@ import * as dto from '../dtos/index.dto';
 import * as I from '../interfaces';
 import * as S from '../services/index.service';
 
-export default class BoardKindController {
+class BoardKindController {
   public boardKindService = new S.boardKindService();
 
   async getBoardKind(req: Request, res: Response, next: NextFunction) {
@@ -61,3 +61,5 @@ export default class BoardKindController {
     }
   }
 }
+
+export default BoardKindController;
