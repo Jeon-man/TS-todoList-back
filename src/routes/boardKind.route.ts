@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import BoardKindController from '@/controllers/ boardKind.controller';
+import BoardKindController from '@/controllers/boardKind.controller';
 import * as dto from '../dtos/index.dto';
 import * as I from '../interfaces';
 import validationMiddleware from '@middlewares/validation.middleware';

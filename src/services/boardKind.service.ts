@@ -5,18 +5,18 @@ import * as I from '../interfaces';
 
 export class boardKindService {
   async findAllBoardKind(): Promise<I.BoardKind[]> {
-    return await DB.BoardKindModel.findAll();
+    return await DB.boardKindModel.findAll();
   }
 
   async findBoardKindById(boardKindId: number): Promise<I.BoardKind> {
-    const findBoardKind: I.BoardKind = await DB.BoardKindModel.findByPk(boardKindId);
+    const findBoardKind: I.BoardKind = await DB.boardKindModel.findByPk(boardKindId);
     if (!findBoardKind) throw new HttpException(409, '');
 
     return findBoardKind;
   }
 
   async createBoardKind(boardKindData: dto.createBoardKindDto): Promise<I.BoardKind> {
-    const createBoardKindData: I.BoardKind = await DB.BoardKindModel.create({ ...boardKindData });
+    const createBoardKindData: I.BoardKind = await DB.boardKindModel.create({ ...boardKindData });
     if (!createBoardKindData) throw new HttpException(409, '');
     return createBoardKindData;
   }
@@ -25,7 +25,7 @@ export class boardKindService {
     const fimdBoardKind: I.BoardKind = await this.findBoardKindById(updateBoardKindId);
     if (!fimdBoardKind) throw new HttpException(409, '');
 
-    await DB.BoardKindModel.update({ ...boardKindData }, { where: { boardKindId: updateBoardKindId } });
+    await DB.boardKindModel.update({ ...boardKindData }, { where: { boardKindId: updateBoardKindId } });
     const updateBoardKind = await this.findBoardKindById(updateBoardKindId);
 
     return updateBoardKind;
@@ -35,7 +35,7 @@ export class boardKindService {
     const findBoard = await this.findBoardKindById(deleteBoardKindId);
     if (!findBoard) throw new HttpException(409, '');
 
-    await DB.BoardKindModel.destroy({ where: { boardKindId: deleteBoardKindId } });
+    await DB.boardKindModel.destroy({ where: { boardKindId: deleteBoardKindId } });
     return findBoard;
   }
 }
