@@ -14,12 +14,13 @@ class ToDosRoute implements I.Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.toDosController.getToDos);
-    this.router.get(`${this.path}/:id(\\d+)`, this.toDosController.getToDoById);
-    this.router.post(`${this.path}`, validationMiddleware(dto.CreateTodoDto, 'body'), this.toDosController.createTodo);
-    this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(dto.CreateTodoDto, 'body', true), this.toDosController.updatetoDo);
-    this.router.get(`${this.path}/success/:id(\\d+)`, this.toDosController.updateSuccessState);
-    this.router.delete(`${this.path}/:id(\\d+)`, this.toDosController.deletetoDo);
+    this.router
+      .get(`${this.path}`, this.toDosController.getToDos)
+      .get(`${this.path}/:id(\\d+)`, this.toDosController.getToDoById)
+      .post(`${this.path}`, validationMiddleware(dto.CreateTodoDto, 'body'), this.toDosController.createTodo)
+      .put(`${this.path}/:id(\\d+)`, validationMiddleware(dto.CreateTodoDto, 'body', true), this.toDosController.updatetoDo)
+      .get(`${this.path}/success/:id(\\d+)`, this.toDosController.updateSuccessState)
+      .delete(`${this.path}/:id(\\d+)`, this.toDosController.deletetoDo);
   }
 }
 

@@ -13,11 +13,12 @@ class GroupRoute implements I.Routes {
     this.initializeRoutes();
   }
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.groupController.getGroups);
-    this.router.get(`${this.path}/:id(\\d+)`, this.groupController.getGroupById);
-    this.router.post(`${this.path}`, validationMiddleware(dto.createGroupDto, 'body'), this.groupController.createGroup);
-    this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(dto.createGroupDto, 'body', true), this.groupController.updateGroup);
-    this.router.delete(`${this.path}/:id(\\d+)`, this.groupController.deleteGroup);
+    this.router
+      .get(`${this.path}`, this.groupController.getGroups)
+      .get(`${this.path}/:id(\\d+)`, this.groupController.getGroupById)
+      .post(`${this.path}`, validationMiddleware(dto.createGroupDto, 'body'), this.groupController.createGroup)
+      .put(`${this.path}/:id(\\d+)`, validationMiddleware(dto.createGroupDto, 'body', true), this.groupController.updateGroup)
+      .delete(`${this.path}/:id(\\d+)`, this.groupController.deleteGroup);
   }
 }
 

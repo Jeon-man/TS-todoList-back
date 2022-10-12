@@ -15,10 +15,11 @@ class AuthRoute implements I.Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}:userId/:authKey`, this.authController.checkEmailAuth);
-    this.router.post(`${this.path}signup`, validationMiddleware(dto.CreateUserDto, 'body'), this.authController.signUp);
-    this.router.post(`${this.path}login`, validationMiddleware(dto.CreateUserDto, 'body'), this.authController.logIn);
-    this.router.post(`${this.path}logout`, authMiddleware, this.authController.logOut);
+    this.router
+      .get(`${this.path}:userId/:authKey`, this.authController.checkEmailAuth)
+      .post(`${this.path}signup`, validationMiddleware(dto.CreateUserDto, 'body'), this.authController.signUp)
+      .post(`${this.path}login`, validationMiddleware(dto.CreateUserDto, 'body'), this.authController.logIn)
+      .post(`${this.path}logout`, authMiddleware, this.authController.logOut);
   }
 }
 
